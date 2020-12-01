@@ -1,4 +1,4 @@
 #!/bin/sh
 
-echo -n $1 >&3
+echo $1 >&2
 shelter <$1
