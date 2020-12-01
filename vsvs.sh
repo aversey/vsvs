@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 res=""
 met=false
 while IFS="" read str
