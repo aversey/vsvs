@@ -1,3 +1,4 @@
+#!/bin/sh
 res=""
 met=false
 while IFS="" read str

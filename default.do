@@ -1,5 +1,5 @@
 #!/bin/sh
-if test -f $1.st
-then
-    { shelter.sh $1.st >$3; } 3>&1 | xargs redo-ifchange
-fi
+export title="$(vsvs.sh title < $1.vs)"
+export content="$(vsvs.sh content < $1.vs)"
+echo -n "$(vsvs.sh template < articles.vs)" | shelter >$3;
+redo-ifchange $1.vs articles.vs
