@@ -1,20 +1,24 @@
 res=""
 met=false
-while read line
+while IFS="" read str
 do
-    value="$(echo -n "$line" | sed 's/ .*//')"
-    if [ "${line:0:1}" == " " ]
+    if [ -z "${str##* *}" ]
     then
-        if [ $met == true ]
-        then
-            res="${res}\n${value}"
-        fi
+        key="${str%% *}"
+        val="${str#* }"
     else
-        if [ "$(echo -n "${line}" | sed 's/[^ ]* //')" == "$1" ]
-        then
-            met=true
-            res="${value}"
-        fi
+        key="${str}"
+        val=""
+    fi
+    if [ -z "${key}" ] && [ $met == true ]
+    then
+        res="${res}"$'\n'"${val}"
+    elif [ "${key}" == "$1" ]
+    then
+        met=true
+        res="${val}"
+    else
+        met=false
     fi
 done
 echo -n "${res}"
