@@ -14,7 +14,7 @@ int main()
     } else if (pid) {
         int c;
         close(p[0]);
-        write(p[1], "echo -n \"", 6);
+        write(p[1], "echo -n \"", 9);
         while ((c = getchar()) != EOF) {
             write(p[1], &c, 1);
         }
