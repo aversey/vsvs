@@ -1,5 +1,4 @@
-if test -f $2.st
+if test -f $1.st
 then
-    deps=$( { shelter.sh $2.st >$2; } 3>&1)
-    redo-ifchange ${deps}
+    { shelter.sh $1.st >$3; } 3>&1 | xargs redo-ifchange
 fi
