@@ -1,5 +1,5 @@
 $(
     title="Welcome"
     content="Hello, World!"
-    shelter main.st
+    shelter.sh main
 )
