@@ -1,6 +1,6 @@
-if [[ $$2 =~ \.st$ ]]
+if [[ $2 =~ \.st$ ]]
 then
-    exit 0
+else
+    deps=$( { shelter.sh $2.st >$2; } 3>&1)
+    redo-ifchange ${deps}
 fi
-deps=$( { shelter.sh $2.st >$2; } 3>&1)
-redo-ifchange ${deps}
