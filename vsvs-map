@@ -14,14 +14,16 @@ do
     if [ -z "${key}" ]
     then
         buf="${buf}"$'\n'"${val}"
-    elif [ -n "${buf}" ]
-    then
-        res="${res}$(echo -n "${buf}" | $1)"
+    else
+        if [ -n "${buf}" ]
+        then
+            res="${res}$(echo -n "${buf}" | $1)"
+        fi
         buf="${val}"
     fi
 done
 if [ -n "${buf}" ]
+then
     res="${res}$(echo -n "${buf}" | $1)"
-    buf="${val}"
 fi
 echo -n "${res}"
