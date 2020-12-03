@@ -1,0 +1,22 @@
+#!/bin/bash
+res=""
+buf=""
+while IFS="" read str
+do
+    if [ -z "${str##* *}" ]
+    then
+        key="${str%% *}"
+        val="${str#* }"
+    else
+        key="${str}"
+        val=""
+    fi
+    if [ -z "${key}" ]
+    then
+        buf="${buf}"$'\n'"${val}"
+    else
+        res="${res}$(echo -n "${buf}" | $1)"
+        buf="${val}"
+    fi
+done
+echo -n "${res}"
