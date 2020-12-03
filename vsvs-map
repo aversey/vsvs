@@ -15,6 +15,7 @@ do
     then
         buf="${buf}"$'\n'"${val}"
     elif [ -n "${buf}" ]
+    then
         res="${res}$(echo -n "${buf}" | $1)"
         buf="${val}"
     fi
