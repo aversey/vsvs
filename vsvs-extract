@@ -32,7 +32,7 @@ else
     for key in `ls -a $path`
     do
         test "$key" == "." || test "$key" == ".." && continue
-        if test -f "$key"
+        if test -f "$path/$key"
         then value=$(cat "$path/$key")
         else
             savedpath=$(pwd)
