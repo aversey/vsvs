@@ -1,5 +1,5 @@
 #!/bin/bash
-after () { test -z "${2##*$1*}" && echo -n "${2#*$1}" }
+after () { test -z "${2##*$1*}" && echo -n "${2#*$1}"; }
 key=""
 value=""
 while IFS="" read line
