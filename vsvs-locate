@@ -1,0 +1,14 @@
+#!/bin/bash
+# Tear $1 into path to file (or directory) and in file,
+# if no such file exit with error.
+after () { test -z "${2##*$1*}" && echo -n "${2#*$1}"; }
+test "${1::1}" == "/" && path=$base || path="."
+lastpath=$1
+until test -n "$lastpath" || test -f "$path"
+do
+    path="$path/${lastpath%%/*}"
+    lastpath=$(after / "$lastpath")
+    test -e "$path" || exit 1
+done
+echo "$path"
+echo "$lastpath"

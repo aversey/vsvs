@@ -1,6 +1,5 @@
 #!/bin/bash
 # Current directory will be represented as VSVS archive in output.
-# The directory itself should be locked.
 for e in `ls -a`
 do
     test "$e" == "." || test "$e" == ".." && continue
