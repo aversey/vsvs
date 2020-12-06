@@ -1,8 +1,0 @@
-model
- title string
- content multiline
-data
- title Web must be fun!
- content blah-blah
-  blah-blah
-  blah-blah
