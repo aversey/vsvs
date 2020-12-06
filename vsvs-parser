@@ -1,0 +1,15 @@
+#!/bin/bash
+after () { test -z "${2##*$1*}" && echo -n "${2#*$1}" }
+key=""
+value=""
+while IFS="" read line
+do
+    if test -z "${line%% *}"
+    then value="${value}"$'\n'"$(after " " "$line")"
+    else
+        eval $1
+        key="${line%% *}"
+        value="$(after " " "$line")"
+    fi
+done
+eval $1

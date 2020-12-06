@@ -1,31 +1,44 @@
 #!/bin/bash
-res=""
-buf=""
-key=""
-while IFS="" read str
+
+# This is a parser of the Very Simple Values Storage.
+# It has two arguments: an action and an object.
+# Action is a string to be evaluated with key and its value provided.
+action=$1
+# Object is like a path in filesystem (which pretty much it is),
+# this is a string describing piece of data in storage.
+object=$2
+
+# Utility functions:
+after () { test -z "${2##*$1*}" && echo -n "${2#*$1}" }
+
+# File processor:
+pfile () {
+    # First of all, we need to lock the file.
+    lockfile="$base/proc/$proc/lock/$object"
+    mkdir -p -- "${lockfile%/*}"
+    echo $proc > $lockfile
+    lockpath="$path.lock"
+    if ln $lockfile $lockpath
+    then
+        # PARSER
+        rm $lockpath
+    fi
+    rm $lockfile
+}
+
+# First of all, we need to locate object in filesystem.
+# To do so, we will get parts of the path from the beginning of object,
+# until we will run out of object or meet the file in filesystem.
+test "${object::1}" == "/" && path=$base || path="."
+lastpath=$object
+until test -n "$lastpath"
 do
-    if [ -z "${str##* *}" ]
-    then
-        newkey="${str%% *}"
-        val="${str#* }"
-    else
-        newkey="${str}"
-        val=""
-    fi
-    if [ -z "${newkey}" ]
-    then
-        buf="${buf}"$'\n'"${val}"
-    else
-        if [ -n "${buf}" ]
-        then
-            eval $1
-        fi
-        key="${newkey}"
-        buf="${val}"
-    fi
+    # Tear another part of $lastpath until slash into $path:
+    path="$path/${lastpath%%/*}"
+    lastpath=$(after / "$lastpath")
+    # If $path does not exist, the object does not exist too,
+    test -e "$path" || exit 1
+    # otherwise it can be file, then we need to parse it and exit,
+    # or it can be a directory, then we need to repeat the process.
+    test -f "$path" && pfile "$action" "$object" "$path" "$lastpath"; exit 0
 done
-if [ -n "${buf}" ]
-then
-    eval $1
-fi
-echo -n "${res}"

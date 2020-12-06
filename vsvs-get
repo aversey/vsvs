@@ -1,2 +1,0 @@
-#!/bin/bash
-vsvs "if [ \"\${key}\" == \"$1\" ]; then res=\"\${buf}\"; fi"
