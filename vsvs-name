@@ -1,0 +1,7 @@
+#!/bin/bash
+# Produce VSVS key-value pair in output,
+# key is passed as $1, value is read from input.
+echo -n "$1"
+while IFS="" read line
+do echo " $line"
+done

@@ -1,4 +1,6 @@
 #!/bin/bash
+# Iterate action over elements from VSVS input,
+# action is passed as $1, it will be evaluated for each key-value pair.
 after () { test -z "${2##*$1*}" && echo -n "${2#*$1}"; }
 key=""
 value=""

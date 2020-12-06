@@ -1,0 +1,14 @@
+#!/bin/bash
+# Current directory will be represented as VSVS archive in output.
+# The directory itself should be locked.
+for e in `ls -a`
+do
+    test "$e" == "." || test "$e" == ".." && continue
+    if test -f "$e"
+    then vsvs-name "$e" < $e
+    else
+        cd "$e"
+        vsvs-archive | vsvs-name "$e"
+        cd ..
+    fi
+done
