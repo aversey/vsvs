@@ -9,9 +9,9 @@ do
     if test -z "${line%% *}"
     then value="${value}"$'\n'"$(after " " "$line")"
     else
-        test -z "$key" && eval $1
+        test -n "$key" && eval $1
         key="${line%% *}"
         value="$(after " " "$line")"
     fi
 done
-test -z "$key" && eval $1
+test -n "$key" && eval $1

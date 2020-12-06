@@ -1,6 +1,8 @@
 #!/bin/bash
-after () { test -z "${2##*$1*}" && echo -n "${2#*$1}" }
-vsvs-locate "$2" | { read path; read vsvspath; } || exit 1
+after () { test -z "${2##*$1*}" && echo -n "${2#*$1}"; }
+res="$(vsvs-locate "$2" || exit 1)"
+path="${res%% *}"
+vsvspath=$(after " " "$res")
 if test -f "$path"
 then
     lockfile="$base/proc/$proc/lock/"

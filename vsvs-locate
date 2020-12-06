@@ -10,5 +10,4 @@ do
     lastpath=$(after / "$lastpath")
     test -e "$path" || exit 1
 done
-echo "$path"
-echo "$lastpath"
+echo "$path $lastpath"
