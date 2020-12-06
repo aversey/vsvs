@@ -19,12 +19,7 @@ then
     rm $lockfile
     until test -z "$vsvspath"
     do
-        data="$(echo -n "$data" | vsvs-parse "
-            if test \"\$key\" == \"${vsvspath%%/*}\"
-            then
-                echo \"\$value\"
-                exit 0
-            fi")"
+        data="$(echo -n "$data" | vsvs-parse "test \"\$key\" == \"${vsvspath%%/*}\" && echo \"\$value\" && exit 0")"
         vsvspath=$(after / "$vsvspath")
     done
     echo -n "$data" | vsvs-parse "$1"
