@@ -1,0 +1,43 @@
+#!/bin/bash
+after () { test -z "${2##*$1*}" && echo -n "${2#*$1}" }
+vsvs-locate "$2" | { read path; read vsvspath; } || exit 1
+if test -f "$path"
+then
+    lockfile="$base/proc/$proc/lock/"
+    if test "${path::1}" == "."
+    then lockfile="$lockfile$base$path"
+    else lockfile="$lockfile$path"
+    fi
+    mkdir -p -- "${lockfile%/*}"
+    echo $proc > $lockfile
+    lockpath="$path.lock"
+    ln $lockfile $lockpath || exit 1 # Error, cannot lock
+    data="$(cat $path)"
+    rm $lockpath
+    rm $lockfile
+    until test -z "$vsvspath"
+    do
+        data="$(echo -n "$data" | vsvs-parse "
+            if test \"\$key\" == \"${vsvspath%%/*}\"
+            then
+                echo \"\$value\"
+                exit 0
+            fi")"
+        vsvspath=$(after / "$vsvspath")
+    done
+    echo -n "$data" | vsvs-parse "$1"
+else
+    for key in `ls -a $path`
+    do
+        test "$key" == "." || test "$key" == ".." && continue
+        if test -f "$key"
+        then value=$(cat "$path/$key")
+        else
+            savedpath=$(pwd)
+            cd "$path/$key"
+            value=$(vsvs-archive)
+            cd "$savedpath"
+        fi
+        eval "$1"
+    done
+fi

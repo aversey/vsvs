@@ -1,5 +1,5 @@
 #!/bin/bash
-# Tear $1 into path to file (or directory) and in file,
+# Tear $1 into path to file (or directory) and path in file,
 # if no such file exit with error.
 after () { test -z "${2##*$1*}" && echo -n "${2#*$1}"; }
 test "${1::1}" == "/" && path=$base || path="."
