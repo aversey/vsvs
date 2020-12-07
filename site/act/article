@@ -1,5 +1,0 @@
-#!/bin/bash
-if test -z "$1"
-then # Response list of articles
-else # Response article page
-fi
