@@ -1,2 +1,17 @@
 #!/bin/bash
-cat $base/data/404.html
+after () { test -z "${2##*$1*}" && echo -n "${2#*$1}"; }
+if test -z "$1"
+then
+    # TODO: deep dark magic of constructing a list of articles
+    cat $base/data/404.html
+elif test -e "list/${1%%/*}"
+then
+    if test -n "$(after / $1)"
+    then cat $base/data/404.html
+    else
+        export title="$(vsvs-extract 'echo "$value"' "list/${1%%/*}/title")"
+        export content="$(vsvs-extract 'echo "$value"' "list/${1%%/*}/content")"
+        vsvs-extract 'echo "$value"' "template/page" | shelter
+    fi
+else cat $base/data/404.html
+fi

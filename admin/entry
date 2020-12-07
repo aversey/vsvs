@@ -1,2 +1,2 @@
 #!/bin/bash
-cat $base/data/404.html
+echo "<html><head><title>Admin</title></head><body><p>Admin</p></body></html>"
