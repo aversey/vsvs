@@ -1,0 +1,13 @@
+list
+ page <html>
+  <head><title>List of articles</title></head>
+  <body>
+  <p>Here are some articles for you:</p>
+  <ul>$list</ul>
+  </body>
+  </html>
+ item <li><a href=\"$id\">$title</a></li>
+page <html>
+ <head><title>$title</title></head>
+ <body>$content</body>
+ </html>

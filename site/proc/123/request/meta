@@ -1,0 +1,4 @@
+host veresov.pro
+port 80
+method POST
+secure no

@@ -1,0 +1,18 @@
+#!/bin/bash
+# This is the process to be called.
+# $proc and $base (initial working directory) is already set.
+# Requested path is in $1, any other request data is in proc/$proc/request.
+# Usually you want to dispatch the path here and call some other programs. =)
+# Path has ending / and no starting one (apth for root is empty).
+# Response meta should be formed in proc/$proc/response,
+# output is response body.
+after () { test -z "${2##*$1*}" && echo -n "${2#*$1}"; }
+startswith() { case $2 in "$1"*) true;; *) false;; esac; }
+if test -z "$1"
+then cat index.html
+elif startswith "article/" "$1"
+then ./act/article "$(after / $1)"
+elif startswith "admin/" "$1"
+then ./act/admin "$(after / $1)"
+else cat 404.html
+fi
