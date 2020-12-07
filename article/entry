@@ -9,8 +9,8 @@ then
     if test -n "$(after / $1)"
     then cat $base/data/404.html
     else
-        export title="$(vsvs-extract 'echo "$value"' "list/${1%%/*}/title")"
-        export content="$(vsvs-extract 'echo "$value"' "list/${1%%/*}/content")"
+        export title="$(vsvs-extract 'test "$key" == "title" && echo "$value"' "list/${1%%/*}")"
+        export content="$(vsvs-extract 'test "$key" == "content" && echo "$value"' "list/${1%%/*}")"
         vsvs-extract 'echo "$value"' "template/page" | shelter
     fi
 else cat $base/data/404.html
