@@ -3,7 +3,7 @@ list
  <head><title>List of articles</title></head>
  <body>
  <p>Here are some articles for you:</p>
- <ul>$(echo "$articles" | vsvs-parse 'echo "<li><a href=\"$key\">$title</a></li>"')</ul>
+ <ul>$(echo "$articles" | vsvs-parse 'echo "<li><a href=\"$key\">$(echo "$value" | vsvs-parse 'test "$key" == "title" && echo "$value"')</a></li>"')</ul>
  </body>
  </html>
 page <html>
