@@ -3,7 +3,10 @@ after () { test -z "${2##*$1*}" && echo -n "${2#*$1}"; }
 if test -z "$1"
 then
     # TODO: deep dark magic of constructing a list of articles
-    echo "<html><head><title>Artciles</title></head><body><p>Artciles</p></body></html>"
+    cd list
+    export articles="$(vsvs-archive)"
+    cd ..
+    vsvs-extract 'test "$key" == "list" && echo "$value"' "template" | shelter
 elif test -e "list/${1%%/*}"
 then
     if test -n "$(after / $1)"

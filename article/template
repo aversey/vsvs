@@ -1,12 +1,11 @@
 list
- page <html>
-  <head><title>List of articles</title></head>
-  <body>
-  <p>Here are some articles for you:</p>
-  <ul>$list</ul>
-  </body>
-  </html>
- item <li><a href=\"$id\">$title</a></li>
+ <html>
+ <head><title>List of articles</title></head>
+ <body>
+ <p>Here are some articles for you:</p>
+ <ul>$(echo "$articles" | vsvs-parse 'echo "<li><a href=\"$key\">$title</a></li>"')</ul>
+ </body>
+ </html>
 page <html>
  <head><title>$title</title></head>
  <body>$content</body>
